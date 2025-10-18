@@ -31,7 +31,7 @@ Azure OpenAI 提供 $200 美金的免費額度，但有**嚴格的限制條件**
 
 ---
 
-### 方案二：Google AI Studio API（推薦！免費且簡單）⭐
+### 方案二：Google AI Studio API
 
 **為什麼推薦使用 Google AI Studio？**
 
