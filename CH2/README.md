@@ -27,7 +27,7 @@ Azure OpenAI 提供 $200 美金的免費額度，但有**嚴格的限制條件**
 
 詳細教學請參考：[Azure OpenAI Service 申請教學](https://ithelp.ithome.com.tw/m/articles/10353046)
 
-**如果您不符合全新帳號條件，請改用下方推薦的 Google AI Studio（完全免費且無限制）**
+**如果您不符合全新帳號條件，請改用下方推薦的 Google AI Studio**
 
 ---
 
