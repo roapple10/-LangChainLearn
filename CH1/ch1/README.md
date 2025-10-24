@@ -65,6 +65,23 @@ pipx install poetry
 poetry --version
 ```
 
+如顯示poetry : 無法辨識 'poetry' 詞彙是否為 Cmdlet、函數、指令檔或可執行程式的名稱。請檢查名稱拼字是否正確，如果包含  路徑的話，請確認路徑是否正確，然後再試一次。 
+請執行以下指令 
+
+```bash
+$base = python -m site --user-base
+$poetryPath = Join-Path $base "Scripts"
+if (Test-Path (Join-Path $poetryPath "poetry.exe")) {
+    $env:Path += ";$poetryPath"
+    [Environment]::SetEnvironmentVariable("Path", $env:Path, "User")
+    Write-Host "`n✅ Poetry path added:`n$poetryPath`n"
+    poetry --version
+} else {
+    Write-Host "`n⚠️ 未找到 poetry.exe，請確認是否已安裝 Poetry。"
+}
+```
+
+
 如安裝過程遇到問題，請參考以上文件或官方 FAQ。
 
 ---
