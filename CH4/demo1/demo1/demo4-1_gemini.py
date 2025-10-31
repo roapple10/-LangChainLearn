@@ -1,19 +1,21 @@
-from langchain_openai import AzureChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from dotenv import dotenv_values
+import os
 
-config = dotenv_values(dotenv_path="../.env")
+config = dotenv_values(dotenv_path="../../.env")
+
+# 設定 Google API Key
+os.environ["GOOGLE_API_KEY"] = config.get("GOOGLE_API_KEY")
+os.environ["GEMINI_MODEL_ID"] = config.get("GEMINI_MODEL_ID")
 
 prompt = PromptTemplate.from_template("Translate the following English text to zh-tw: {text}")
 
-
 # 初始化語言模型
-model = AzureChatOpenAI(
-    azure_endpoint=config.get("AZURE_OPENAI_ENDPOINT"),
-    azure_deployment=config.get("AZURE_OPENAI_DEPLOYMENT_NAME"),
-    openai_api_version=config.get("AZURE_OPENAI_API_VERSION"),
-    api_key=config.get("AZURE_OPENAI_KEY"),
+model = ChatGoogleGenerativeAI(
+    model=os.environ["GEMINI_MODEL_ID"],
+    temperature=0.7,
 )
 
 # 建 LLMChain

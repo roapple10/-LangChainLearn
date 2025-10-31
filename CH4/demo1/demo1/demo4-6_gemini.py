@@ -4,21 +4,23 @@ from langchain.chains.router import MultiPromptChain
 from langchain.chains.router.multi_prompt_prompt import MULTI_PROMPT_ROUTER_TEMPLATE
 from langchain.chains.router.llm_router import LLMRouterChain, RouterOutputParser
 from langchain_core.prompts import PromptTemplate
-from langchain_openai import AzureChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 
 import os
 from dotenv import dotenv_values
-config = dotenv_values(dotenv_path="../.env")
+config = dotenv_values(dotenv_path="../../.env")
 
-# 初始化 Azure OpenAI LLM
-llm = AzureChatOpenAI(
-    azure_endpoint=config.get("AZURE_OPENAI_ENDPOINT"),
-    azure_deployment=config.get("AZURE_OPENAI_DEPLOYMENT_NAME"),
-    openai_api_version=config.get("AZURE_OPENAI_API_VERSION"), 
-    api_key=config.get("AZURE_OPENAI_KEY"),
-    temperature=0.5) 
+# 設定 Google API Key
+os.environ["GOOGLE_API_KEY"] = config.get("GOOGLE_API_KEY")
+os.environ["GEMINI_MODEL_ID"] = config.get("GEMINI_MODEL_ID")
+
+# 初始化 Google Gemini LLM
+llm = ChatGoogleGenerativeAI(
+    model=os.environ["GEMINI_MODEL_ID"],
+    temperature=0.5,
+)
 
 
 # 定義翻譯 chain

@@ -11,7 +11,7 @@ import os
 from dotenv import dotenv_values
 from datetime import datetime
 
-config = dotenv_values(".env")
+config = dotenv_values(dotenv_path="../.env")
 
 # 取得目前的月份
 current_month = datetime.now().month

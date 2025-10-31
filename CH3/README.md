@@ -1,6 +1,6 @@
-# CH2: LangChain 基礎應用
+# CH3: Few-Shot Learning 與範例選擇器
 
-本章節展示 LangChain 的基礎應用，包括使用不同的 LLM 模型進行各種任務。
+本章節展示 LangChain 的 Few-Shot Learning（少樣本學習）和 Example Selectors（範例選擇器），學習如何透過範例來引導 AI 模型進行更準確的分類和預測。
 
 ## 🔑 API 申請教學
 
@@ -111,8 +111,8 @@ curl -sSL https://install.python-poetry.org | python3 -
 ### macOS / Linux
 
 ```bash
-# 進入 CH2 目錄（從專案根目錄）
-cd python_langchain_gemini_azure/CH2
+# 進入 CH3 目錄（從專案根目錄）
+cd python_langchain_gemini_azure/CH3
 
 # 安裝基礎依賴
 poetry install
@@ -124,8 +124,8 @@ poetry add "langchain-google-genai<3.0.0"
 ### Windows
 
 ```powershell
-# 進入 CH2 目錄（從專案根目錄）
-cd python_langchain_gemini_azure\CH2
+# 進入 CH3 目錄（從專案根目錄）
+cd python_langchain_gemini_azure\CH3
 
 # 安裝基礎依賴
 poetry install
@@ -148,46 +148,55 @@ poetry add "langchain-google-genai<3.0.0"
 在專案根目錄建立 `.env` 檔案（Mac 和 Windows 相同）：
 
 ```env
-# OpenAI API Key（用於 2-2/app.py）
-OPENAI_API_KEY=your-openai-api-key-here
+# Azure OpenAI 設定（用於 3-1/app.py, 3-2/app.py, 3-3/app.py）
+AZURE_OPENAI_ENDPOINT=your-azure-endpoint-here
+AZURE_OPENAI_DEPLOYMENT_NAME=your-deployment-name-here
+AZURE_OPENAI_DEPLOYMENT_NAME_EMBEDDING=your-embedding-deployment-name-here
+AZURE_OPENAI_API_VERSION=2024-02-15-preview
+AZURE_OPENAI_KEY=your-azure-api-key-here
 
-# Google Gemini API Key（用於 2-2/app_gemini.py）
+# Google Gemini API Key（用於 3-1/app_gemini.py, 3-2/app_gemini.py）
 GOOGLE_API_KEY=your-google-api-key-here
+GEMINI_MODEL_ID=gemini-1.5-flash-latest
 ```
 
 ### 取得 API Keys
 
-- **OpenAI**: https://platform.openai.com/api-keys
-- **Google Gemini**: https://makersuite.google.com/app/apikey
+- **Azure OpenAI**: https://portal.azure.com/（需要建立 Azure OpenAI 資源）
+- **Google Gemini**: https://ai.google.dev/（推薦使用，免費且無需信用卡）
 
 ## 執行範例程式
 
 ### macOS / Linux
 
 ```bash
-# 執行 OpenAI 範例
-poetry run python 2-2/app.py
+# 3-1: Few-Shot Learning 基礎
+poetry run python 3-1/app.py          # Azure OpenAI 版本
+poetry run python 3-1/app_gemini.py   # Google Gemini 版本
 
-# 執行 Gemini 範例
-poetry run python 2-2/app_gemini.py
+# 3-2: 語意相似度範例選擇器
+poetry run python 3-2/app.py          # Azure OpenAI 版本
+poetry run python 3-2/app_gemini.py   # Google Gemini 版本
 
-# 執行其他章節
-poetry run python 2-3/app.py
-poetry run python 2-4/app.py
+# 3-3: 動態範例選擇與 Few-Shot Learning 整合
+poetry run python 3-3/app.py          # Azure OpenAI 版本（完整功能）
+poetry run python 3-3/app_gemini.py   # Google Gemini 版本（完整功能）
 ```
 
 ### Windows
 
 ```powershell
-# 執行 OpenAI 範例
-poetry run python 2-2/app.py
+# 3-1: Few-Shot Learning 基礎
+poetry run python 3-1/app.py          # Azure OpenAI 版本
+poetry run python 3-1/app_gemini.py   # Google Gemini 版本
 
-# 執行 Gemini 範例
-poetry run python 2-2/app_gemini.py
+# 3-2: 語意相似度範例選擇器
+poetry run python 3-2/app.py          # Azure OpenAI 版本
+poetry run python 3-2/app_gemini.py   # Google Gemini 版本
 
-# 執行其他章節
-poetry run python 2-3/app.py
-poetry run python 2-4/app.py
+# 3-3: 動態範例選擇與 Few-Shot Learning 整合
+poetry run python 3-3/app.py          # Azure OpenAI 版本（完整功能）
+poetry run python 3-3/app_gemini.py   # Google Gemini 版本（完整功能）
 ```
 
 ## 啟用虛擬環境（進階）
@@ -212,8 +221,12 @@ poetry env activate
 
 
 # 現在可以直接執行 Python 腳本
-python 2-2/app.py
-python 2-2/app_gemini.py
+python 3-1/app.py
+python 3-1/app_gemini.py
+python 3-2/app.py
+python 3-2/app_gemini.py
+python 3-3/app.py
+python 3-3/app_gemini.py
 
 # 離開虛擬環境
 exit
@@ -226,8 +239,12 @@ exit
 poetry shell
 
 # 現在可以直接執行 Python 腳本
-poetry run python 2-2/app.py
-poetry run python 2-2/app_gemini.py
+poetry run python 3-1/app.py
+poetry run python 3-1/app_gemini.py
+poetry run python 3-2/app.py
+poetry run python 3-2/app_gemini.py
+poetry run python 3-3/app.py
+poetry run python 3-3/app_gemini.py
 
 # 離開虛擬環境
 exit
@@ -235,15 +252,24 @@ exit
 
 ## 章節說明
 
-### 2-2: LLM 基礎使用
-- `app.py`: 使用 OpenAI GPT 模型進行翻譯
-- `app_gemini.py`: 使用 Google Gemini 模型進行翻譯
+### 3-1: Few-Shot Learning 基礎
+- `app.py`: 使用 Azure OpenAI + FewShotChatMessagePromptTemplate
+- `app_gemini.py`: 使用 Google Gemini + FewShotChatMessagePromptTemplate
+- **學習重點**：透過提供範例（北部人 vs 南部人的特徵）來引導 AI 模型進行分類
 
-### 2-3: Prompt Templates
-- 使用 LangChain 的 Prompt Templates 功能
+### 3-2: 語意相似度範例選擇器
+- `app.py`: Azure OpenAI + SemanticSimilarityExampleSelector（使用 Azure Embeddings）
+- `app_gemini.py`: Google Gemini + SemanticSimilarityExampleSelector（使用 Gemini Embeddings）
+- **學習重點**：使用向量資料庫（Chroma）找出與使用者輸入最相似的範例
 
-### 2-4: Output Parsers
-- 解析和結構化 LLM 輸出
+### 3-3: 動態範例選擇與 Few-Shot Learning 整合
+- `app.py`: Azure OpenAI 完整版 - 示範如何將 SemanticSimilarityExampleSelector 整合到 FewShotChatMessagePromptTemplate
+- `app_gemini.py`: Google Gemini 完整版 - 使用 Gemini Embeddings 實現相同功能
+- **學習重點**：
+  - 動態選擇最相關的範例提供給 AI
+  - 比較固定範例 vs 動態範例的效果差異
+  - 使用 `example_selector` 參數取代固定的 `examples`
+  - 展示從基礎 Few-Shot Learning 到進階動態選擇的完整流程
 
 ## 故障排除
 
@@ -258,7 +284,7 @@ exit
 **解決方法**：
 ```bash
 # 確認在正確的目錄（從專案根目錄）
-cd python_langchain_gemini_azure/CH2
+cd python_langchain_gemini_azure/CH3
 
 # 重新安裝依賴
 poetry install
@@ -267,9 +293,10 @@ poetry install
 ### 問題：API Key 錯誤
 
 **解決方法**：
-1. 確認 `.env` 檔案位於 CH2 目錄
+1. 確認 `.env` 檔案位於 CH3 目錄
 2. 確認 API Key 沒有多餘的空格或引號
 3. 確認 API Key 仍然有效且有配額
+4. 對於 Azure OpenAI，確認所有必要的環境變數都已設定（包括 Embedding 部署名稱）
 
 ### 問題：依賴版本衝突
 
@@ -285,16 +312,35 @@ poetry install
 poetry add "langchain-google-genai<3.0.0"
 ```
 
+### 問題：Chroma 向量資料庫錯誤
+
+**解決方法**：
+```bash
+# 確認已安裝 langchain-chroma
+poetry add langchain-chroma
+
+# 如果仍有問題，刪除舊的 Chroma 資料庫
+rm -rf ./chroma_db
+
+# 重新執行程式
+poetry run python 3-2/app.py
+```
+
 ## 相關資源
 
 - [LangChain 官方文檔](https://python.langchain.com/)
+- [LangChain Few-Shot Prompting](https://python.langchain.com/docs/how_to/few_shot_examples/)
+- [LangChain Example Selectors](https://python.langchain.com/docs/how_to/example_selectors/)
 - [Poetry 官方文檔](https://python-poetry.org/docs/)
 - [Google Gemini API 文檔](https://ai.google.dev/docs)
-- [OpenAI API 文檔](https://platform.openai.com/docs)
+- [Azure OpenAI API 文檔](https://learn.microsoft.com/azure/ai-services/openai/)
+- [Chroma 向量資料庫文檔](https://docs.trychroma.com/)
 
 ## 注意事項
 
 - 本專案使用 Poetry 進行依賴管理，建議不要混用 pip
 - API Keys 請勿上傳至版本控制系統（`.env` 已在 `.gitignore` 中）
 - 使用 API 前請確認服務商的定價和配額限制
+- 3-2 和 3-3 需要 Embedding 模型，Azure OpenAI 需要額外部署 Embedding 模型（如 text-embedding-ada-002）
+- Chroma 向量資料庫會在專案目錄下建立 `chroma_db` 資料夾，可在 `.gitignore` 中忽略
 

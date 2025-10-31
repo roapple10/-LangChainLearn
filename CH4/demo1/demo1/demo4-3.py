@@ -10,7 +10,7 @@ from langchain_core.prompts import PromptTemplate
 import os
 from dotenv import dotenv_values
 
-config = dotenv_values(".env")
+config = dotenv_values(dotenv_path="../.env")
 
 # 定義描述城市的提示樣板
 describe_prompt = PromptTemplate(

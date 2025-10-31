@@ -1,8 +1,8 @@
 # 引入Chain模組
 from langchain.chains import LLMChain
 
-# 引入OpenAI LLM模組
-from langchain_openai import AzureChatOpenAI
+# 引入Google Gemini模組
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 # 引入prompt模組
 from langchain_core.prompts import PromptTemplate
@@ -10,14 +10,16 @@ from langchain_core.prompts import PromptTemplate
 import os
 from dotenv import dotenv_values
 
-config = dotenv_values(dotenv_path="../.env")
+config = dotenv_values(dotenv_path="../../.env")
 
-llm = AzureChatOpenAI(
-    azure_endpoint=config.get("AZURE_OPENAI_ENDPOINT"),
-    azure_deployment=config.get("AZURE_OPENAI_DEPLOYMENT_NAME"),
-    openai_api_version=config.get("AZURE_OPENAI_API_VERSION"), 
-    api_key=config.get("AZURE_OPENAI_KEY"),
-    temperature=0.5) 
+# 設定 Google API Key
+os.environ["GOOGLE_API_KEY"] = config.get("GOOGLE_API_KEY")
+os.environ["GEMINI_MODEL_ID"] = config.get("GEMINI_MODEL_ID")
+
+llm = ChatGoogleGenerativeAI(
+    model=os.environ["GEMINI_MODEL_ID"],
+    temperature=0.5,
+)
 
 # 定義情緒分析的提示樣板
 sentiment_analysis_prompt = PromptTemplate(
@@ -58,4 +60,5 @@ def execute_conditional_chain(user_input):
 result = execute_conditional_chain("我對於你們的服務感到非常滿意，服務人員很用心，環境也很整潔。")
 
 print(result["text"])
+
 

@@ -119,20 +119,20 @@ poetry env activate
 **Windows (PowerShell):**
 ```powershell
 # 範例路徑（請使用步驟 1 顯示的實際路徑）
-C:\Users\YourUsername\Documents\Lanchain\LangChainLearnBook\CH1\ch1\.venv\Scripts\Activate.ps1
+<your-project-path>\python_langchain_gemini_azure\CH1\ch1\.venv\Scripts\Activate.ps1
 ```
 
 **Mac (Terminal):**
 ```bash
 # 範例路徑（請使用步驟 1 顯示的實際路徑）
-source /Users/ray-mac/Documents/Lanchain/LangChainLearnBook/CH1/ch1/.venv/bin/activate
+source <your-project-path>/python_langchain_gemini_azure/CH1/ch1/.venv/bin/activate
 ```
 
 **確認是否啟動成功：** 如果成功啟動，您的終端機提示符會變成：
 
 **Windows (PowerShell):**
 ```powershell
-(.venv) PS C:\Users\YourUsername\Documents\Lanchain\LangChainLearnBook\CH1\ch1>
+(.venv) PS <your-path>\python_langchain_gemini_azure\CH1\ch1>
 ```
 
 **Mac (Terminal):**

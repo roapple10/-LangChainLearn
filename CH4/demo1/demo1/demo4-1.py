@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from dotenv import dotenv_values
 
-config = dotenv_values(".env")
+config = dotenv_values(dotenv_path="../.env")
 
 prompt = PromptTemplate.from_template("Translate the following English text to zh-tw: {text}")
 
