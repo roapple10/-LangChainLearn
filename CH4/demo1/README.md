@@ -338,6 +338,53 @@ exit
   - 根據情緒分析結果選擇不同的回應策略
   - 建立客服系統的基礎架構：正面情緒→鼓勵回應，負面情緒→安撫回應
 
+### demo4-7_gemini_interactive.py: 🎓 AI 學生輔導系統（互動式條件鏈應用）
+- **學習重點**：
+  - 建立持續互動的 Conditional Chain 系統
+  - 使用 Python `input()` 實現即時對話功能
+  - 實作多分類困擾類型分析（感情、課業、家庭、人際關係、生涯規劃）
+  - 根據不同困擾類型，自動選擇對應的輔導 chain
+  - 六個專業輔導 chain：
+    * `relationship_counseling_chain` - 感情困擾輔導
+    * `academic_counseling_chain` - 課業困擾輔導
+    * `family_counseling_chain` - 家庭困擾輔導
+    * `interpersonal_counseling_chain` - 人際關係輔導
+    * `career_counseling_chain` - 生涯規劃輔導
+    * `other_counseling_chain` - 其他困擾輔導
+  - 設計友善的使用者介面與錯誤處理機制
+- **執行方式**：
+  ```bash
+  poetry run python demo1/demo4-7_gemini_interactive.py
+  ```
+- **使用範例**：
+  - 「我跟男/女朋友分手了，感覺很難過」（感情困擾）
+  - 「最近考試壓力好大，成績一直不理想」（課業困擾）
+  - 「爸媽常常吵架，讓我很煩躁」（家庭困擾）
+
+### wife_translator.py: 💑 老婆翻譯機（實用型條件鏈應用）
+- **學習重點**：
+  - 應用 Conditional Chain 解決實際生活情境
+  - 實作語境分析與意圖識別功能
+  - 建立五種話語類型分類系統：
+    * 表面隨便型 -「都可以」、「隨便」
+    * 委託決定型 -「你決定」
+    * 暗示期待型 -「你看著辦」
+    * 被動配合型 -「我陪你就好」
+    * 隱藏在意型 -「沒關係」、「沒意見」
+  - 每個話語類型對應專門的翻譯 chain，提供：
+    * 真實意圖翻譯（她真正想說的話）
+    * 具體回應建議（如何適當回應）
+  - 內建範例查看功能（輸入 `example` 查看 10 個常見對話）
+  - 展示 Chain 在日常溝通場景的實用價值
+- **執行方式**：
+  ```bash
+  poetry run python demo1/wife_translator.py
+  ```
+- **使用範例**：
+  - 「我吃哪間餐廳都可以。」→ 分析類型 → 提供翻譯與建議
+  - 「你決定吧。」→ 識別委託決定型 → 給予決斷力建議
+  - 「沒關係，我隨便。」→ 檢測隱藏在意 → 建議主動詢問
+
 ## 故障排除
 
 ### 問題：找不到 poetry 命令
